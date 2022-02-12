@@ -13,6 +13,7 @@ Future<Album> fetchAlbum() async {
       .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
 
   if (response.statusCode == 200) {
+    print('tous vas bien');
     // If the server did return a 200 OK response,
     // then parse the JSON.
     return Album.fromJson(jsonDecode(response.body));

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 
 class Categories extends StatefulWidget {
+  final String categorie;
+  Categories(this.categorie);
   @override
   _CategoriesState createState() {
     return _CategoriesState();
@@ -21,17 +23,18 @@ class _CategoriesState extends State<Categories> {
   }
 
   int currentSelectedItem = 0;
+  List<String> listText = ['Menus','Plats','Boissons', 'Dessert'];
+  List<IconData> listIcons = [Icons.fastfood,Icons.airplane_ticket,Icons.face_retouching_natural,Icons.pages];
   @override
   Widget build(BuildContext context) {
-    int items = 10;
+    int items = 100;
     // TODO: implement build
     return SliverToBoxAdapter(
       child: Container(
         height: 100,
-        margin: EdgeInsets.only(top: 10),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: items,
+          itemCount: listText.length,
           itemBuilder: (context, index) => Stack(
             children: [
               Column(
@@ -45,12 +48,14 @@ class _CategoriesState extends State<Categories> {
                       onTap: () {
                         setState(() {
                           currentSelectedItem = index;
+                          setState(() {
+                          });
                         });
                       },
                       child: Card(
                         color: index == currentSelectedItem ?   Colors.black.withOpacity(0.7) : Colors.white,
                         child: Icon(
-                          Icons.fastfood,
+                          listIcons[index],
                           color: index == currentSelectedItem ?  Colors.white: Colors.black.withOpacity(0.7),
                         ),
                         elevation: 3,
@@ -73,7 +78,7 @@ class _CategoriesState extends State<Categories> {
                   child: Row(
                     children: [
                       Spacer(),
-                      Text("Burger"),
+                      Text(listText[index]),
                       Spacer(),
                     ],
                   ),

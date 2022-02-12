@@ -4,6 +4,7 @@ import 'categories.dart';
 import 'Hambers_list.dart';
 import 'burger_page.dart';
 import 'burger_page_test.dart';
+import 'menu_liste.dart';
 
 void main() {
   runApp(MyApp());
@@ -77,9 +78,7 @@ class _FoodTruckState extends State<FoodTruck> {
             ],
           ),
           Header(),
-          Categories(),
-          HambergersList(row: 1,),
-          HambergersList(row: 2,),
+          MenuList(),
         ],
       ),
       extendBody: true,
