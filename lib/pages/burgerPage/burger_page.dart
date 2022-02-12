@@ -1,7 +1,9 @@
+import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:flutter/material.dart';
+import 'package:catho_app_food_truck/cart_items_bloc.dart';
 
 class BurgerPage extends StatefulWidget {
-  static const tag = "burger_page";
+  static const routeName = "/burgerPage";
 
   @override
   _BurgerPageState createState() {
@@ -20,18 +22,13 @@ class _BurgerPageState extends State<BurgerPage> {
     super.dispose();
   }
 
-  int quantity = 0;
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as ArgumentsBurgerPage;
     Size size = MediaQuery.of(context).size;
-    Widget baconImage = Container(
-      height: 100,
-      child: Image.asset("images/hamberguers/PngItem_4880899.png"),
-    );
-    Widget cheeseImage = Container(
-      height: 100,
-      child: Image.asset("images/hamberguers/PngItem_1738671.png"),
-    );
+    int quantity = bloc.numberOfitemProduct(args.produit);
+
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
@@ -63,7 +60,7 @@ class _BurgerPageState extends State<BurgerPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Chicken Burger",
+                  args.produit.nom,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -78,7 +75,10 @@ class _BurgerPageState extends State<BurgerPage> {
                 ),
                 Row(
                   children: [
-                    cheeseImage,
+                    Image.network(
+                      args.produit.url_image,
+                      height: 130,
+                    ),
                     Spacer(),
                     Column(
                       children: [
@@ -88,7 +88,7 @@ class _BurgerPageState extends State<BurgerPage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white),
                           child: Text(
-                            "13.95 €",
+                            args.produit.prix.toString() + " €",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
@@ -100,7 +100,7 @@ class _BurgerPageState extends State<BurgerPage> {
                         ),
                         Row(
                           children: [
-                            for (var i = 0; i < 5; i++)
+                            for (var i = 0; i < args.produit.note; i++)
                               Icon(
                                 Icons.star,
                                 color: Colors.white,
@@ -149,7 +149,7 @@ class _BurgerPageState extends State<BurgerPage> {
                           height: 10,
                         ),
                         Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                          args.produit.description,
                           style: TextStyle(
                             fontSize: 15,
                           ),
@@ -176,7 +176,8 @@ class _BurgerPageState extends State<BurgerPage> {
                                 onPressed: () {
                                   setState(() {
                                     if (quantity != 0) {
-                                      quantity = quantity -1;
+                                      quantity = quantity - 1;
+                                      bloc.deleteToCart(args.produit);
                                     }
                                   });
                                 },
@@ -188,6 +189,7 @@ class _BurgerPageState extends State<BurgerPage> {
                                 onPressed: () {
                                   setState(() {
                                     quantity = quantity + 1;
+                                    bloc.addToCart(args.produit);
                                   });
                                 },
                                 icon: Icon(Icons.add_circle),

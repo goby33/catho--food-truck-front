@@ -1,12 +1,16 @@
-import 'package:catho_app_food_truck/menu_result.dart';
+import 'dart:ffi';
+
+import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
+import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'client/entity/Produits.dart';
 
 // APPEL API
-Future<List<Album>> fetchAlbum(String value) async {
+Future<List<Produit>> fetchAlbum(String value) async {
   print('je charge' + value);
   final response = await http.get(Uri.parse(
       'https://morning-escarpment-57263.herokuapp.com/v1/' + value + '/all'));
@@ -16,7 +20,7 @@ Future<List<Album>> fetchAlbum(String value) async {
     // If the server did return a 200 OK response,
     // then parse the JSON.
     var responseJson = json.decode(response.body);
-    return (responseJson as List).map((p) => Album.fromJson(p)).toList();
+    return (responseJson as List).map((p) => Produit.fromJson(p)).toList();
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -24,34 +28,17 @@ Future<List<Album>> fetchAlbum(String value) async {
   }
 }
 
-// CLASS
-class Album {
-  final int id;
-  final String nom;
-  final String description;
-  final int prix;
-  final int note;
-  final String url_image;
-
-  const Album({
-    required this.id,
-    required this.nom,
-    required this.description,
-    required this.prix,
-    required this.note,
-    required this.url_image,
-  });
-  factory Album.fromJson(Map<String, dynamic> json) {
-    return Album(
-      id: json['id'],
-      nom: json['nom'],
-      description: json['description'],
-      prix: json['prix'],
-      note: json['note'],
-      url_image: json['url_image'],
-    );
-  }
+void direction(BuildContext context, Produit produit) {
+  Navigator.pushNamed(
+    context,
+    BurgerPage.routeName,
+    arguments: ArgumentsBurgerPage(
+      produit
+    ),
+  );
 }
+// CLASS
+
 
 class MenuList extends StatefulWidget {
   @override
@@ -61,7 +48,7 @@ class MenuList extends StatefulWidget {
 }
 
 class _MenuListState extends State<MenuList> {
-  int currentSelectedItem = 1;
+  int currentSelectedItem = 0;
   List<String> textsCategories = ['menu', 'plat', 'boisson', 'dessert'];
   List<IconData> iconsCategories = [
     Icons.fastfood,
@@ -69,7 +56,7 @@ class _MenuListState extends State<MenuList> {
     Icons.face_retouching_natural,
     Icons.pages
   ];
-  late Future<List<Album>> futureAlbum;
+  late Future<List<Produit>> futureAlbum;
   @override
   void initState() {
     super.initState();
@@ -153,12 +140,12 @@ class _MenuListState extends State<MenuList> {
           ),
           Container(
             height: 500,
-            child: FutureBuilder<List<Album>>(
+            child: FutureBuilder<List<Produit>>(
               future: futureAlbum,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data != null) {
-                    List<Album>? posts = snapshot.data;
+                    List<Produit>? posts = snapshot.data;
                     if (posts != null) {
                       return GridView.count(
                         padding:EdgeInsets.only(
@@ -168,13 +155,14 @@ class _MenuListState extends State<MenuList> {
                         children: List<Widget>.generate(
                           posts.length,
                           (index) {
-                            Album element = posts[index];
+                            Produit element = posts[index];
                             return Stack(
                               children: [
                                 Container(
                                   child: GestureDetector(
                                     onTap: () {
                                       //TODO
+                                      direction(context,element);
                                     },
                                     child: Card(
                                       color: Theme.of(context).primaryColor,
@@ -244,7 +232,7 @@ class _MenuListState extends State<MenuList> {
                                   right:40,
                                   child: GestureDetector(
                                     onTap: () {
-                                      //TODO
+                                      direction(context,element);
                                     },
                                     child: Container(
                                       height: 120,
