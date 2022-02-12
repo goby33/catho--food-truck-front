@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'header.dart';
-import 'categories.dart';
-import 'Hambers_list.dart';
-import 'burger_page.dart';
-import 'burger_page_test.dart';
+import 'pages/burgerPage/burger_page.dart';
+import 'pages/Pannier/Pannier.dart';
+import 'menu_liste.dart';
+import 'pages/Pannier/Pannier.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,9 +26,10 @@ class MyApp extends StatelessWidget {
       ),
       home: FoodTruck(),
       routes: {
-        BurgerPage.tag: (_)=> BurgerPage(),
-        burger_page_test.tag: (_) => burger_page_test()
+        BurgerPage.routeName: (context) => BurgerPage(),
+        Pannier.routeName: (context) => Pannier(),
       },
+
       debugShowCheckedModeBanner: false,
     );
   }
@@ -42,6 +43,7 @@ class FoodTruck extends StatefulWidget {
 }
 
 class _FoodTruckState extends State<FoodTruck> {
+
   @override
   void initState() {
     super.initState();
@@ -62,24 +64,21 @@ class _FoodTruckState extends State<FoodTruck> {
           SliverAppBar(
             pinned: true,
             title: Text("Deviver mer"),
-            leading: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: null
-            ),
             actions: [
               IconButton(
                   icon: Icon(Icons.shopping_cart
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(burger_page_test.tag);
+                    Navigator.pushNamed(
+                        context,
+                        Pannier.routeName,
+                    );
                   },
               ),
             ],
           ),
           Header(),
-          Categories(),
-          HambergersList(row: 1,),
-          HambergersList(row: 2,),
+          MenuList(),
         ],
       ),
       extendBody: true,
@@ -116,6 +115,45 @@ class _FoodTruckState extends State<FoodTruck> {
               ],
             ),
           ),
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.orange,
+              ),
+              child: Text(
+                'Reglages:',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.monetization_on),
+              title: Text('Approvisionner mon compte'),
+            ),
+            ListTile(
+              leading: Icon(Icons.message),
+              title: Text('Messages'),
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Log Out'),
+            ),
+          ],
         ),
       ),
     );

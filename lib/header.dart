@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
+
   @override
   _HeaderState createState() {
     return _HeaderState();
@@ -81,7 +81,7 @@ class _HeaderState extends State<Header> {
                             ],
                           ),
                           Spacer(),
-                          Text("154 €",
+                          Text("14 €",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
