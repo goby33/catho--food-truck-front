@@ -1,7 +1,6 @@
-import 'package:catho_app_food_truck/client/entity/Produits.dart';
-import 'package:catho_app_food_truck/pages/Pannier/Pannier_object.dart';
+import 'package:catho_app_food_truck/client/entity/Pannier_object.dart';
+import 'package:catho_app_food_truck/client/entity/cart_items_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:catho_app_food_truck/cart_items_bloc.dart';
 
 class Pannier extends StatefulWidget {
   static const routeName = "/pannier";
@@ -27,7 +26,11 @@ class _PannierState extends State<Pannier> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text('Pannier')),
+      backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: Text('Pannier'),
+      ),
       body: StreamBuilder(
           stream: bloc.getStream,
           initialData: bloc.allItems,
@@ -49,8 +52,8 @@ class _PannierState extends State<Pannier> {
                             padding: EdgeInsets.only(
                                 top: 5, bottom: 5, left: 20, right: 20),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.white),
+                                color: Colors.white24,
+                                border: Border.all(color: Colors.blueGrey),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             child: Row(
@@ -119,7 +122,7 @@ class _PannierState extends State<Pannier> {
                       child: Icon(
                         Icons.remove_shopping_cart,
                         size: 100,
-                        color: Colors.white24,
+                        color: Colors.blueGrey,
                       ),
                     );
                   }
@@ -132,6 +135,34 @@ class _PannierState extends State<Pannier> {
             }
             return const CircularProgressIndicator();
           }),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+        child: Container(
+          height: 100,
+          color: Colors.black38,
+          child: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            child: Row (
+              children: [
+                Spacer(),
+                Text("pp"),
+                Spacer()
+              ],
+            )
+          ),
+        ),
+      ),
+      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/');
+        },
+        child: Icon(
+          Icons.home,
+          color: Colors.white,
+        ),
+      ),
+      bottomNavigationBar: Footer(),*/
     );
   }
 }

@@ -7,7 +7,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'client/entity/Produits.dart';
+import '../client/entity/Produits.dart';
 
 // APPEL API
 Future<List<Produit>> fetchAlbum(String value) async {

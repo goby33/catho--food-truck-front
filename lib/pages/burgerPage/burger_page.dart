@@ -1,7 +1,7 @@
 import 'package:catho_app_food_truck/pages/Pannier/Pannier.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:flutter/material.dart';
-import 'package:catho_app_food_truck/cart_items_bloc.dart';
+import 'package:catho_app_food_truck/client/entity/cart_items_bloc.dart';
 
 class BurgerPage extends StatefulWidget {
   static const routeName = "/burgerPage";
