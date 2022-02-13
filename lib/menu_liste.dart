@@ -50,8 +50,8 @@ class _MenuListState extends State<MenuList> {
   List<String> textsCategories = ['menu', 'plat', 'boisson', 'dessert'];
   List<IconData> iconsCategories = [
     Icons.fastfood,
-    Icons.airplane_ticket,
-    Icons.face_retouching_natural,
+    Icons.food_bank_rounded,
+    Icons.hourglass_empty,
     Icons.pages
   ];
   late Future<List<Produit>> futureAlbum;

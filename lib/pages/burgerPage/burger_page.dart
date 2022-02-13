@@ -37,11 +37,7 @@ class _BurgerPageState extends State<BurgerPage> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: null,
-            icon: Icon(Icons.shopping_cart),
-          ),
-          IconButton(
-            onPressed: null,
+            onPressed: () {},
             icon: CircleAvatar(
               backgroundColor: Colors.white70,
               radius: 15,
@@ -107,6 +103,11 @@ class _BurgerPageState extends State<BurgerPage> {
                                 Icons.star,
                                 color: Colors.white,
                               ),
+                            for (var i = 0; i < 5- args.produit.note; i++)
+                              Icon(
+                                Icons.star_border,
+                                color: Colors.white,
+                              ),
                           ],
                         )
                       ],
@@ -125,7 +126,8 @@ class _BurgerPageState extends State<BurgerPage> {
             top: Radius.circular(45),
           ),
         ),
-        onClosing: () {},
+        onClosing: () {
+        },
         builder: (context) {
           return ClipRRect(
             borderRadius: BorderRadius.vertical(
@@ -191,7 +193,6 @@ class _BurgerPageState extends State<BurgerPage> {
                                   setState(() {
                                     quantity = quantity + 1;
                                   });
-                                  print(quantity);
                                 },
                                 icon: Icon(Icons.add_circle),
                                 color: Theme.of(context).accentColor,

@@ -1,3 +1,4 @@
+import 'package:catho_app_food_truck/cart_items_bloc.dart';
 import 'package:flutter/material.dart';
 import 'header.dart';
 import 'pages/burgerPage/burger_page.dart';
@@ -29,7 +30,6 @@ class MyApp extends StatelessWidget {
         BurgerPage.routeName: (context) => BurgerPage(),
         Pannier.routeName: (context) => Pannier(),
       },
-
       debugShowCheckedModeBanner: false,
     );
   }
@@ -43,7 +43,6 @@ class FoodTruck extends StatefulWidget {
 }
 
 class _FoodTruckState extends State<FoodTruck> {
-
   @override
   void initState() {
     super.initState();
@@ -65,15 +64,23 @@ class _FoodTruckState extends State<FoodTruck> {
             pinned: true,
             title: Text("Deviver mer"),
             actions: [
-              IconButton(
-                  icon: Icon(Icons.shopping_cart
+              Padding(
+                padding: EdgeInsets.only(right: 20.0, top: 20.0),
+                child: GestureDetector(
+                  child: Stack(
+                    alignment: Alignment.topCenter,
+                    children: [
+                      Icon(
+                        Icons.shopping_cart,
+                        size: 26,
+                      ),
+                      //TODO
+                    ],
                   ),
-                  onPressed: () {
-                    Navigator.pushNamed(
-                        context,
-                        Pannier.routeName,
-                    );
+                  onTap: () {
+                    Navigator.pushNamed(context, Pannier.routeName);
                   },
+                ),
               ),
             ],
           ),
@@ -86,7 +93,7 @@ class _FoodTruckState extends State<FoodTruck> {
       floatingActionButton: FloatingActionButton(
         onPressed: null,
         child: Icon(
-            Icons.home,
+          Icons.home,
           color: Colors.white,
         ),
       ),
