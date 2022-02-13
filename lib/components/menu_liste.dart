@@ -1,28 +1,14 @@
+import 'dart:async';
+
 import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import '../client/entity/Produits.dart';
+import '../client/repository/produitRepository.dart';
 
 // APPEL API
-Future<List<Produit>> fetchAlbum(String value) async {
-  final response = await http.get(Uri.parse(
-      'https://morning-escarpment-57263.herokuapp.com/v1/' + value + '/all'));
 
-  if (response.statusCode == 202) {
-    // If the server did return a 200 OK response,
-    // then parse the JSON.
-    var responseJson = json.decode(response.body);
-    return (responseJson as List).map((p) => Produit.fromJson(p)).toList();
-  } else {
-    // If the server did not return a 200 OK response,
-    // then throw an exception.
-    throw Exception('Failed to load album');
-  }
-}
 
 void direction(BuildContext context, Produit produit) {
   Navigator.pushNamed(
@@ -42,7 +28,7 @@ class MenuList extends StatefulWidget {
     return _MenuListState();
   }
 }
-
+bool afficher = true;
 class _MenuListState extends State<MenuList> {
   int currentSelectedItem = 0;
   List<String> textsCategories = ['menu', 'plat', 'boisson', 'dessert'];
@@ -89,8 +75,10 @@ class _MenuListState extends State<MenuList> {
                             setState(() {
                               currentSelectedItem = index;
                             });
+                            afficher = false;
                             futureAlbum = fetchAlbum(
                                 textsCategories[currentSelectedItem]);
+                            afficher = true;
                           },
                           child: Card(
                             color: index == currentSelectedItem
@@ -143,106 +131,110 @@ class _MenuListState extends State<MenuList> {
                   if (snapshot.data != null) {
                     List<Produit>? posts = snapshot.data;
                     if (posts != null) {
-                      return GridView.count(
-                        padding:EdgeInsets.only(
-                          bottom: 200,
-                        ),
-                        crossAxisCount: 2,
-                        children: List<Widget>.generate(
-                          posts.length,
-                          (index) {
-                            Produit element = posts[index];
-                            return Stack(
-                              children: [
-                                Container(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      //TODO
-                                      direction(context,element);
-                                    },
-                                    child: Card(
-                                      color: Theme.of(context).primaryColor,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 20),
-                                        child: Column(
-                                          children: [
-                                            Center(
-                                              child:
-                                              Text(
-                                                element.nom,
-                                                style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                            ),
-
-                                            Spacer(),
-                                            Row(
-                                              children: [
-                                                Spacer(),
+                      if (afficher) {
+                        return GridView.count(
+                          padding:EdgeInsets.only(
+                            bottom: 200,
+                          ),
+                          crossAxisCount: 2,
+                          children: List<Widget>.generate(
+                            posts.length,
+                                (index) {
+                              Produit element = posts[index];
+                              return Stack(
+                                children: [
+                                  Container(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        //TODO
+                                        direction(context,element);
+                                      },
+                                      child: Card(
+                                        color: Theme.of(context).primaryColor,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 20),
+                                          child: Column(
+                                            children: [
+                                              Center(
+                                                child:
                                                 Text(
-                                                  element.prix.toString() +
-                                                      ' €',
+                                                  element.nom,
                                                   style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold),
                                                 ),
-                                                Spacer(),
-                                                //BOUTON PLUS
-                                                Container(
-                                                  width: 40,
-                                                  height: 40,
-                                                  child: Card(
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
+                                              ),
+
+                                              Spacer(),
+                                              Row(
+                                                children: [
+                                                  Spacer(),
+                                                  Text(
+                                                    element.prix.toString() +
+                                                        ' €',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 25,
+                                                      fontWeight: FontWeight.bold,
                                                     ),
-                                                    child: Icon(Icons.add),
                                                   ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                                  Spacer(),
+                                                  //BOUTON PLUS
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    child: Card(
+                                                      shape:
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                      ),
+                                                      child: Icon(Icons.add),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      elevation: 3,
-                                      margin: EdgeInsets.all(5),
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(45),
-                                          bottomRight: Radius.circular(15),
-                                          topLeft: Radius.circular(45),
-                                          topRight: Radius.circular(45),
+                                        elevation: 3,
+                                        margin: EdgeInsets.all(5),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(45),
+                                            bottomRight: Radius.circular(15),
+                                            topLeft: Radius.circular(45),
+                                            topRight: Radius.circular(45),
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Positioned(
-                                  top: 35,
-                                  right:40,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      direction(context,element);
-                                    },
-                                    child: Container(
-                                      height: 120,
-                                      child: Image.network(
-                                        element.url_image
+                                  Positioned(
+                                    top: 35,
+                                    right:40,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        direction(context,element);
+                                      },
+                                      child: Container(
+                                        height: 120,
+                                        child: Image.network(
+                                            element.url_image
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      );
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      } else {
+                        print('pp');
+                      }
                     }
                   }
                 } else if (snapshot.hasError) {
