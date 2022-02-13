@@ -1,7 +1,6 @@
-import 'package:catho_app_food_truck/client/entity/Produits.dart';
-import 'package:catho_app_food_truck/pages/Pannier/Pannier_object.dart';
+import 'package:catho_app_food_truck/client/entity/Pannier_object.dart';
+import 'package:catho_app_food_truck/client/entity/cart_items_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:catho_app_food_truck/cart_items_bloc.dart';
 
 class Pannier extends StatefulWidget {
   static const routeName = "/pannier";
@@ -27,7 +26,11 @@ class _PannierState extends State<Pannier> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text('Pannier')),
+      backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: Text('Pannier'),
+      ),
       body: StreamBuilder(
           stream: bloc.getStream,
           initialData: bloc.allItems,
@@ -43,14 +46,17 @@ class _PannierState extends State<Pannier> {
                         listPannier.length,
                         (index) {
                           PannierObject element = listPannier[index];
+                          int nbreElement =
+                              bloc.numberOfitemProduct(element.produit);
+                          int prix = nbreElement * element.produit.prix;
                           return Container(
                             height: 100,
                             margin: EdgeInsets.all(10),
                             padding: EdgeInsets.only(
                                 top: 5, bottom: 5, left: 20, right: 20),
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.white),
+                                color: Colors.white24,
+                                border: Border.all(color: Colors.blueGrey),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10))),
                             child: Row(
@@ -79,10 +85,7 @@ class _PannierState extends State<Pannier> {
                                           icon: Icon(Icons.remove_circle),
                                           color: Theme.of(context).accentColor,
                                         ),
-                                        Text(bloc
-                                            .numberOfitemProduct(
-                                                element.produit)
-                                            .toString()),
+                                        Text(nbreElement.toString()),
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
@@ -99,10 +102,7 @@ class _PannierState extends State<Pannier> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  (bloc.numberOfitemProduct(element.produit) *
-                                              element.produit.prix)
-                                          .toString() +
-                                      " €",
+                                  prix.toString() + " €",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -119,7 +119,7 @@ class _PannierState extends State<Pannier> {
                       child: Icon(
                         Icons.remove_shopping_cart,
                         size: 100,
-                        color: Colors.white24,
+                        color: Colors.blueGrey,
                       ),
                     );
                   }
@@ -132,6 +132,56 @@ class _PannierState extends State<Pannier> {
             }
             return const CircularProgressIndicator();
           }),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+        child: Container(
+          height: 100,
+          color: Colors.blueGrey,
+          child: BottomAppBar(
+            shape: CircularNotchedRectangle(),
+            child: Row(
+              children: [
+                Spacer(),
+                Text(
+                  "Total: " + bloc.getPrix().toString() + " €",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  height: 45,
+                  width: 200,
+                  margin: EdgeInsets.only(top: 10),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(45),
+                    ),
+                    color: (bloc.getPrix() > 0) ? Colors.orange : Colors.grey,
+                    onPressed: () {
+                      if (bloc.getPrix() > 0) {
+                        Navigator.pushNamed(
+                          context,
+                          '/',
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Buy now",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
