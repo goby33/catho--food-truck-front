@@ -44,5 +44,12 @@ class CartItemsBloc {
     }
     return quantity;
   }
+  int getPrix() {
+    int prix = 0;
+    for(PannierObject element in allItems ) {
+      prix += element.quantity * element.produit.prix;
+    }
+    return prix;
+  }
 }
 final bloc = CartItemsBloc();  // add to the end of the file

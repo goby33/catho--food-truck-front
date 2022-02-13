@@ -46,6 +46,9 @@ class _PannierState extends State<Pannier> {
                         listPannier.length,
                         (index) {
                           PannierObject element = listPannier[index];
+                          int nbreElement =
+                              bloc.numberOfitemProduct(element.produit);
+                          int prix = nbreElement * element.produit.prix;
                           return Container(
                             height: 100,
                             margin: EdgeInsets.all(10),
@@ -82,10 +85,7 @@ class _PannierState extends State<Pannier> {
                                           icon: Icon(Icons.remove_circle),
                                           color: Theme.of(context).accentColor,
                                         ),
-                                        Text(bloc
-                                            .numberOfitemProduct(
-                                                element.produit)
-                                            .toString()),
+                                        Text(nbreElement.toString()),
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
@@ -102,10 +102,7 @@ class _PannierState extends State<Pannier> {
                                 ),
                                 Spacer(),
                                 Text(
-                                  (bloc.numberOfitemProduct(element.produit) *
-                                              element.produit.prix)
-                                          .toString() +
-                                      " €",
+                                  prix.toString() + " €",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
@@ -139,30 +136,52 @@ class _PannierState extends State<Pannier> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
         child: Container(
           height: 100,
-          color: Colors.black38,
+          color: Colors.blueGrey,
           child: BottomAppBar(
             shape: CircularNotchedRectangle(),
-            child: Row (
+            child: Row(
               children: [
                 Spacer(),
-                Text("pp"),
-                Spacer()
+                Text(
+                  "Total: " + bloc.getPrix().toString() + " €",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+                Spacer(),
+                Container(
+                  height: 45,
+                  width: 200,
+                  margin: EdgeInsets.only(top: 10),
+                  child: MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(45),
+                    ),
+                    color: (bloc.getPrix() > 0) ? Colors.orange : Colors.grey,
+                    onPressed: () {
+                      if (bloc.getPrix() > 0) {
+                        Navigator.pushNamed(
+                          context,
+                          '/',
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Buy now",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
               ],
-            )
+            ),
           ),
         ),
       ),
-      /* floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/');
-        },
-        child: Icon(
-          Icons.home,
-          color: Colors.white,
-        ),
-      ),
-      bottomNavigationBar: Footer(),*/
     );
   }
 }

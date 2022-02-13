@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
 import 'package:flutter/material.dart';
