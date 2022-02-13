@@ -11,12 +11,10 @@ import 'client/entity/Produits.dart';
 
 // APPEL API
 Future<List<Produit>> fetchAlbum(String value) async {
-  print('je charge' + value);
   final response = await http.get(Uri.parse(
       'https://morning-escarpment-57263.herokuapp.com/v1/' + value + '/all'));
 
   if (response.statusCode == 202) {
-    print('tous vas bien');
     // If the server did return a 200 OK response,
     // then parse the JSON.
     var responseJson = json.decode(response.body);

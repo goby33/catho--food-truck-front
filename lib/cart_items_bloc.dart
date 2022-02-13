@@ -2,30 +2,41 @@
 import 'dart:async';
 
 import 'package:catho_app_food_truck/client/entity/Produits.dart';
+import 'package:catho_app_food_truck/pages/Pannier/Pannier_object.dart';
 class CartItemsBloc {
-  /// The [cartStreamController] is an object of the StreamController class
-  /// .broadcast enables the stream to be read in multiple screens of our app
+
   final cartStreamController = StreamController.broadcast();
-  /// The [getStream] getter would be used to expose our stream to other classes
+
   Stream get getStream => cartStreamController.stream;
-  /// The [allItems] Map would hold all the data this bloc provides
-  final List<Produit> allItems = [
+
+  final List<PannierObject> allItems = [
   ];
-  /// The [dispose] method is used
-  /// to automatically close the stream when the widget is removed from the widget tree
+
   void dispose() {
     cartStreamController.close(); // close our StreamController
   }
-  void addToCart(Produit produit) {
-    allItems.add(produit);
-  }
-  void deleteToCart(Produit produit) {
-    if (allItems.contains(produit)) {
-      allItems.remove(produit);
+
+  // Methode
+  void addToCart(Produit produit, int quantity) {
+    Iterable<PannierObject> listPannierObject = allItems.where((c) => c.produit == produit);
+    if (listPannierObject.isNotEmpty) {
+      listPannierObject.first.quantity = quantity;
+    } else {
+      allItems.add(PannierObject(produit: produit, quantity: quantity));
     }
   }
+  void deleteToCart(Produit produit) {
+    /*if (allItems.contains(produit)) {
+      allItems.remove(produit);
+    }*/
+    print('je supprime');
+  }
   int numberOfitemProduct(Produit produit) {
-    return allItems.where((c) => c == produit).toList().length;
+    Iterable<PannierObject> listPannierObject = allItems.where((c) => c.produit == produit);
+    if (listPannierObject.isNotEmpty) {
+      return listPannierObject.first.quantity;
+    }
+    return 0;
   }
 }
 final bloc = CartItemsBloc();  // add to the end of the file

@@ -1,3 +1,4 @@
+import 'package:catho_app_food_truck/pages/Pannier/Pannier.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:catho_app_food_truck/cart_items_bloc.dart';
@@ -21,13 +22,14 @@ class _BurgerPageState extends State<BurgerPage> {
   void dispose() {
     super.dispose();
   }
+  int quantity = 0;
 
   @override
   Widget build(BuildContext context) {
     final args =
         ModalRoute.of(context)!.settings.arguments as ArgumentsBurgerPage;
     Size size = MediaQuery.of(context).size;
-    int quantity = bloc.numberOfitemProduct(args.produit);
+    //int quantity = bloc.numberOfitemProduct(args.produit);
 
     // TODO: implement build
     return Scaffold(
@@ -177,7 +179,6 @@ class _BurgerPageState extends State<BurgerPage> {
                                   setState(() {
                                     if (quantity != 0) {
                                       quantity = quantity - 1;
-                                      bloc.deleteToCart(args.produit);
                                     }
                                   });
                                 },
@@ -189,8 +190,8 @@ class _BurgerPageState extends State<BurgerPage> {
                                 onPressed: () {
                                   setState(() {
                                     quantity = quantity + 1;
-                                    bloc.addToCart(args.produit);
                                   });
+                                  print(quantity);
                                 },
                                 icon: Icon(Icons.add_circle),
                                 color: Theme.of(context).accentColor,
@@ -207,7 +208,15 @@ class _BurgerPageState extends State<BurgerPage> {
                                 borderRadius: BorderRadius.circular(45),
                               ),
                               color: Theme.of(context).accentColor,
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  bloc.addToCart(args.produit, quantity);
+                                });
+                                Navigator.pushNamed(
+                                  context,
+                                  '/',
+                                );
+                              },
                               child: Text(
                                 "Buy now",
                                 style: TextStyle(

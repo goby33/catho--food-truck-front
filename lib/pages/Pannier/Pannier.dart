@@ -1,4 +1,5 @@
 import 'package:catho_app_food_truck/client/entity/Produits.dart';
+import 'package:catho_app_food_truck/pages/Pannier/Pannier_object.dart';
 import 'package:flutter/material.dart';
 import 'package:catho_app_food_truck/cart_items_bloc.dart';
 
@@ -31,7 +32,7 @@ class _PannierState extends State<Pannier> {
         stream: bloc.getStream,
         initialData: bloc.allItems,
         builder: (context, snapshot) {
-          List<Produit>? posts = snapshot.data as List<Produit>?;
+          List<PannierObject>? posts = snapshot.data as List<PannierObject>?;
           return Text(posts!.length.toString());
         }
 
