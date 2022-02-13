@@ -61,10 +61,10 @@ class _PannierState extends State<Pannier> {
                                   children: [
                                     Spacer(),
                                     Center(
-                                      child: Text(element.produit.nom, style:
-                                        TextStyle(
-                                          fontSize: 18
-                                        ),),
+                                      child: Text(
+                                        element.produit.nom,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
                                     ),
                                     Spacer(),
                                     Row(
@@ -72,17 +72,22 @@ class _PannierState extends State<Pannier> {
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              bloc.addToCart(element.produit, -1);
+                                              bloc.addToCart(
+                                                  element.produit, -1);
                                             });
                                           },
                                           icon: Icon(Icons.remove_circle),
                                           color: Theme.of(context).accentColor,
                                         ),
-                                        Text(bloc.numberOfitemProduct(element.produit).toString()),
+                                        Text(bloc
+                                            .numberOfitemProduct(
+                                                element.produit)
+                                            .toString()),
                                         IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              bloc.addToCart(element.produit, 1);
+                                              bloc.addToCart(
+                                                  element.produit, 1);
                                             });
                                           },
                                           icon: Icon(Icons.add_circle),
@@ -94,12 +99,14 @@ class _PannierState extends State<Pannier> {
                                 ),
                                 Spacer(),
                                 Text(
-                                    (bloc.numberOfitemProduct(element.produit) * element.produit.prix).toString() + " €",
+                                  (bloc.numberOfitemProduct(element.produit) *
+                                              element.produit.prix)
+                                          .toString() +
+                                      " €",
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.blueGrey
-                                  ),
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blueGrey),
                                 ),
                               ],
                             ),
@@ -108,7 +115,13 @@ class _PannierState extends State<Pannier> {
                       ),
                     );
                   } else {
-                    return Text('pannier vide');
+                    return Center(
+                      child: Icon(
+                        Icons.remove_shopping_cart,
+                        size: 100,
+                        color: Colors.white24,
+                      ),
+                    );
                   }
                 } else {
                   return Text("error");

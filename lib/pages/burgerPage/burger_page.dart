@@ -208,15 +208,17 @@ class _BurgerPageState extends State<BurgerPage> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(45),
                               ),
-                              color: Theme.of(context).accentColor,
+                              color: (quantity > 0) ? Theme.of(context).accentColor: Colors.white24,
                               onPressed: () {
-                                setState(() {
-                                  bloc.addToCart(args.produit, quantity);
-                                });
-                                Navigator.pushNamed(
-                                  context,
-                                  '/',
-                                );
+                                if (quantity > 0) {
+                                  setState(() {
+                                    bloc.addToCart(args.produit, quantity);
+                                  });
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/',
+                                  );
+                                }
                               },
                               child: Text(
                                 "Buy now",
