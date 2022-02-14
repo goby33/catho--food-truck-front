@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
+  const Login({Key? key}) : super(key: key);
+
   @override
   _LoginState createState() {
     return _LoginState();
@@ -20,13 +22,14 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      body: Container(
-        margin: EdgeInsets.only(top: 200, left: 30),
-        color: Colors.black,
-        child: Image.asset(
-          'assets/images/logo_2.png',
+      body: Center(
+        child: CircleAvatar(
+          radius: 100,
+          backgroundColor: Colors.transparent,
+          child: Image.asset(
+            'images/logo_2.png',
+          ),
         ),
       ),
     );

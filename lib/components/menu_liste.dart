@@ -9,26 +9,26 @@ import '../client/repository/produitRepository.dart';
 
 // APPEL API
 
-
 void direction(BuildContext context, Produit produit) {
   Navigator.pushNamed(
     context,
     BurgerPage.routeName,
-    arguments: ArgumentsBurgerPage(
-      produit
-    ),
+    arguments: ArgumentsBurgerPage(produit),
   );
 }
 // CLASS
 
-
 class MenuList extends StatefulWidget {
+  const MenuList({Key? key}) : super(key: key);
+
   @override
   _MenuListState createState() {
     return _MenuListState();
   }
 }
+
 bool afficher = true;
+
 class _MenuListState extends State<MenuList> {
   int currentSelectedItem = 0;
   List<String> textsCategories = ['menu', 'plat', 'boisson', 'dessert'];
@@ -57,7 +57,7 @@ class _MenuListState extends State<MenuList> {
         children: [
           Container(
             height: 100,
-            margin: EdgeInsets.only(top: 10),
+            margin: const EdgeInsets.only(top: 10),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: textsCategories.length,
@@ -91,7 +91,7 @@ class _MenuListState extends State<MenuList> {
                                   : Colors.black.withOpacity(0.7),
                             ),
                             elevation: 3,
-                            margin: EdgeInsets.all(10),
+                            margin: const EdgeInsets.all(10),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25)),
                           ),
@@ -109,11 +109,11 @@ class _MenuListState extends State<MenuList> {
                       width: 90,
                       child: Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Text(textsCategories[index][0].toUpperCase() +
                               textsCategories[index].substring(1) +
                               's'),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
                     ),
@@ -122,7 +122,7 @@ class _MenuListState extends State<MenuList> {
               ),
             ),
           ),
-          Container(
+          SizedBox(
             height: 500,
             child: FutureBuilder<List<Produit>>(
               future: futureAlbum,
@@ -133,97 +133,93 @@ class _MenuListState extends State<MenuList> {
                     if (posts != null) {
                       if (afficher) {
                         return GridView.count(
-                          padding:EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             bottom: 200,
                           ),
                           crossAxisCount: 2,
                           children: List<Widget>.generate(
                             posts.length,
-                                (index) {
+                            (index) {
                               Produit element = posts[index];
                               return Stack(
                                 children: [
-                                  Container(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        //TODO
-                                        direction(context,element);
-                                      },
-                                      child: Card(
-                                        color: Theme.of(context).primaryColor,
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(top: 20),
-                                          child: Column(
-                                            children: [
-                                              Center(
-                                                child:
+                                  GestureDetector(
+                                    onTap: () {
+                                      //TODO
+                                      direction(context, element);
+                                    },
+                                    child: Card(
+                                      color: Theme.of(context).primaryColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 20),
+                                        child: Column(
+                                          children: [
+                                            Center(
+                                              child: Text(
+                                                element.nom,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                            const Spacer(),
+                                            Row(
+                                              children: [
+                                                const Spacer(),
                                                 Text(
-                                                  element.nom,
+                                                  element.prix.toString() +
+                                                      ' €',
                                                   style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      fontWeight: FontWeight.bold),
+                                                    color: Colors.white,
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
-                                              ),
-
-                                              Spacer(),
-                                              Row(
-                                                children: [
-                                                  Spacer(),
-                                                  Text(
-                                                    element.prix.toString() +
-                                                        ' €',
-                                                    style: const TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 25,
-                                                      fontWeight: FontWeight.bold,
+                                                const Spacer(),
+                                                //BOUTON PLUS
+                                                SizedBox(
+                                                  width: 40,
+                                                  height: 40,
+                                                  child: Card(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
                                                     ),
+                                                    child:
+                                                        const Icon(Icons.add),
                                                   ),
-                                                  Spacer(),
-                                                  //BOUTON PLUS
-                                                  Container(
-                                                    width: 40,
-                                                    height: 40,
-                                                    child: Card(
-                                                      shape:
-                                                      RoundedRectangleBorder(
-                                                        borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                      ),
-                                                      child: Icon(Icons.add),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                        elevation: 3,
-                                        margin: EdgeInsets.all(5),
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(45),
-                                            bottomRight: Radius.circular(15),
-                                            topLeft: Radius.circular(45),
-                                            topRight: Radius.circular(45),
-                                          ),
+                                      ),
+                                      elevation: 3,
+                                      margin: const EdgeInsets.all(5),
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(45),
+                                          bottomRight: Radius.circular(15),
+                                          topLeft: Radius.circular(45),
+                                          topRight: Radius.circular(45),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Positioned(
                                     top: 35,
-                                    right:40,
+                                    right: 40,
                                     child: GestureDetector(
                                       onTap: () {
-                                        direction(context,element);
+                                        direction(context, element);
                                       },
-                                      child: Container(
+                                      child: SizedBox(
                                         height: 120,
-                                        child: Image.network(
-                                            element.url_image
-                                        ),
+                                        child: Image.network(element.url_image),
                                       ),
                                     ),
                                   ),

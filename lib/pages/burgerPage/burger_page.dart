@@ -1,10 +1,11 @@
-import 'package:catho_app_food_truck/pages/Pannier/Pannier.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:flutter/material.dart';
 import 'package:catho_app_food_truck/client/entity/cart_items_bloc.dart';
 
 class BurgerPage extends StatefulWidget {
   static const routeName = "/burgerPage";
+
+  const BurgerPage({Key? key}) : super(key: key);
 
   @override
   _BurgerPageState createState() {
@@ -22,6 +23,7 @@ class _BurgerPageState extends State<BurgerPage> {
   void dispose() {
     super.dispose();
   }
+
   int quantity = 0;
 
   @override
@@ -31,14 +33,13 @@ class _BurgerPageState extends State<BurgerPage> {
     Size size = MediaQuery.of(context).size;
     //int quantity = bloc.numberOfitemProduct(args.produit);
 
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         actions: [
           IconButton(
             onPressed: () {},
-            icon: CircleAvatar(
+            icon: const CircleAvatar(
               backgroundColor: Colors.white70,
               radius: 15,
               child: CircleAvatar(
@@ -53,22 +54,22 @@ class _BurgerPageState extends State<BurgerPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   args.produit.nom,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                       color: Colors.white),
                 ),
-                Text(
+                const Text(
                   "Deliver Me Burger. Fast Delivery & great service",
                   style: TextStyle(fontSize: 14, color: Colors.white54),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 40,
                 ),
                 Row(
@@ -77,34 +78,34 @@ class _BurgerPageState extends State<BurgerPage> {
                       args.produit.url_image,
                       height: 130,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(4),
+                          padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white),
                           child: Text(
                             args.produit.prix.toString() + " €",
-                            style: TextStyle(
+                            style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
                             for (var i = 0; i < args.produit.note; i++)
-                              Icon(
+                              const Icon(
                                 Icons.star,
                                 color: Colors.white,
                               ),
-                            for (var i = 0; i < 5- args.produit.note; i++)
-                              Icon(
+                            for (var i = 0; i < 5 - args.produit.note; i++)
+                              const Icon(
                                 Icons.star_border,
                                 color: Colors.white,
                               ),
@@ -121,54 +122,54 @@ class _BurgerPageState extends State<BurgerPage> {
       ),
       bottomSheet: BottomSheet(
         backgroundColor: Colors.teal,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(45),
           ),
         ),
-        onClosing: () {
-        },
+        onClosing: () {},
         builder: (context) {
           return ClipRRect(
-            borderRadius: BorderRadius.vertical(
+            borderRadius: const BorderRadius.vertical(
               top: Radius.circular(45),
             ),
             child: Container(
               width: size.width,
-              color: Color.fromRGBO(240, 240, 240, 1),
+              color: const Color.fromRGBO(240, 240, 240, 1),
               height: size.height / 1.6,
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+                    padding:
+                        const EdgeInsets.only(left: 30, right: 30, top: 30),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Description",
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Text(
                           args.produit.description,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15,
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   // HAMBERGER
                   Container(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     child: Row(
                       children: [
                         Container(
-                          margin: EdgeInsets.all(5),
+                          margin: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(45),
                             color:
@@ -184,8 +185,8 @@ class _BurgerPageState extends State<BurgerPage> {
                                     }
                                   });
                                 },
-                                icon: Icon(Icons.remove_circle),
-                                color: Theme.of(context).accentColor,
+                                icon: const Icon(Icons.remove_circle),
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                               Text(quantity.toString()),
                               IconButton(
@@ -194,8 +195,8 @@ class _BurgerPageState extends State<BurgerPage> {
                                     quantity = quantity + 1;
                                   });
                                 },
-                                icon: Icon(Icons.add_circle),
-                                color: Theme.of(context).accentColor,
+                                icon: const Icon(Icons.add_circle),
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ],
                           ),
@@ -203,12 +204,14 @@ class _BurgerPageState extends State<BurgerPage> {
                         Expanded(
                           child: Container(
                             height: 45,
-                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: MaterialButton(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(45),
                               ),
-                              color: (quantity > 0) ? Theme.of(context).accentColor: Colors.white24,
+                              color: (quantity > 0)
+                                  ? Theme.of(context).colorScheme.secondary
+                                  : Colors.white24,
                               onPressed: () {
                                 if (quantity > 0) {
                                   setState(() {
@@ -220,7 +223,7 @@ class _BurgerPageState extends State<BurgerPage> {
                                   );
                                 }
                               },
-                              child: Text(
+                              child: const Text(
                                 "Buy now",
                                 style: TextStyle(
                                   color: Colors.white,
