@@ -1,7 +1,7 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
+  const Header({Key? key}) : super(key: key);
 
   @override
   _HeaderState createState() {
@@ -23,7 +23,6 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // TODO: implement build
     return SliverList(
         delegate: SliverChildListDelegate(
       [
@@ -32,9 +31,9 @@ class _HeaderState extends State<Header> {
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   height: size.height / 5,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       color: Colors.teal,
                       borderRadius:
                           BorderRadius.vertical(bottom: Radius.circular(45)),
@@ -43,12 +42,12 @@ class _HeaderState extends State<Header> {
                       ]),
                   child: Column(
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             backgroundColor: Colors.white70,
                             radius: 35,
                             child: CircleAvatar(
@@ -57,12 +56,12 @@ class _HeaderState extends State<Header> {
                               radius: 30,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Column(
                             children: [
-                              Text(
+                              const Text(
                                 "Paul Carton",
                                 style: TextStyle(
                                     color: Colors.white70,
@@ -70,18 +69,18 @@ class _HeaderState extends State<Header> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Container(
-                                padding: EdgeInsets.all(4),
+                                padding: const EdgeInsets.all(4),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: Colors.black54,
                                 ),
-                                child: Text("Master Cyber",
+                                child: const Text("Master Cyber",
                                     style: TextStyle(color: Colors.white70)),
                               ),
                             ],
                           ),
-                          Spacer(),
-                          Text("14 €",
+                          const Spacer(),
+                          const Text("14 €",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -91,29 +90,28 @@ class _HeaderState extends State<Header> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 )
               ],
             ),
             Positioned(
               bottom: 0,
-              child: Container(
+              child: SizedBox(
                 height: 50,
                 width: size.width,
                 child: Card(
                   elevation: 3,
-                  margin: EdgeInsets.symmetric(horizontal: 50),
+                  margin: const EdgeInsets.symmetric(horizontal: 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: TextFormField(
                     decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      labelText: "What does you belly want to eat ?",
-                      suffixIcon: Icon(Icons.search),
-                      contentPadding: EdgeInsets.only(left: 20)
-                    ),
+                        border: InputBorder.none,
+                        labelText: "What does you belly want to eat ?",
+                        suffixIcon: Icon(Icons.search),
+                        contentPadding: EdgeInsets.only(left: 20)),
                   ),
                 ),
               ),

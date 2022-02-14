@@ -4,7 +4,7 @@ class PannierObject {
   final Produit produit;
   late int quantity;
 
-   PannierObject({
+  PannierObject({
     required this.produit,
     required this.quantity,
   });

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class Footer extends StatelessWidget {
+  const Footer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return ClipRRect(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(45)),
       child: Container(
         color: Colors.black38,
         child: BottomAppBar(
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           child: Row(
-            children: [
+            children: const [
               Spacer(),
               IconButton(
                 onPressed: null,

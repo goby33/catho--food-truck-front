@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class Pannier extends StatefulWidget {
   static const routeName = "/pannier";
 
+  const Pannier({Key? key}) : super(key: key);
+
   @override
   _PannierState createState() {
     return _PannierState();
@@ -24,12 +26,11 @@ class _PannierState extends State<Pannier> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      backgroundColor: Color.fromRGBO(240, 240, 240, 1),
+      backgroundColor: const Color.fromRGBO(240, 240, 240, 1),
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: Text('Pannier'),
+        title: const Text('Pannier'),
       ),
       body: StreamBuilder(
           stream: bloc.getStream,
@@ -51,28 +52,28 @@ class _PannierState extends State<Pannier> {
                           int prix = nbreElement * element.produit.prix;
                           return Container(
                             height: 100,
-                            margin: EdgeInsets.all(10),
-                            padding: EdgeInsets.only(
+                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.only(
                                 top: 5, bottom: 5, left: 20, right: 20),
                             decoration: BoxDecoration(
                                 color: Colors.white24,
                                 border: Border.all(color: Colors.blueGrey),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10))),
                             child: Row(
                               children: [
                                 Image.network(element.produit.url_image),
-                                Spacer(),
+                                const Spacer(),
                                 Column(
                                   children: [
-                                    Spacer(),
+                                    const Spacer(),
                                     Center(
                                       child: Text(
                                         element.produit.nom,
-                                        style: TextStyle(fontSize: 18),
+                                        style: const TextStyle(fontSize: 18),
                                       ),
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Row(
                                       children: [
                                         IconButton(
@@ -82,8 +83,10 @@ class _PannierState extends State<Pannier> {
                                                   element.produit, -1);
                                             });
                                           },
-                                          icon: Icon(Icons.remove_circle),
-                                          color: Theme.of(context).accentColor,
+                                          icon: const Icon(Icons.remove_circle),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                         ),
                                         Text(nbreElement.toString()),
                                         IconButton(
@@ -93,17 +96,19 @@ class _PannierState extends State<Pannier> {
                                                   element.produit, 1);
                                             });
                                           },
-                                          icon: Icon(Icons.add_circle),
-                                          color: Theme.of(context).accentColor,
+                                          icon: const Icon(Icons.add_circle),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
                                         ),
                                       ],
                                     )
                                   ],
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Text(
                                   prix.toString() + " €",
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.blueGrey),
@@ -115,7 +120,7 @@ class _PannierState extends State<Pannier> {
                       ),
                     );
                   } else {
-                    return Center(
+                    return const Center(
                       child: Icon(
                         Icons.remove_shopping_cart,
                         size: 100,
@@ -124,35 +129,35 @@ class _PannierState extends State<Pannier> {
                     );
                   }
                 } else {
-                  return Text("error");
+                  return const Text("error");
                 }
               }
             } else {
-              return Text("error");
+              return const Text("error");
             }
             return const CircularProgressIndicator();
           }),
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(45)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(45)),
         child: Container(
           height: 100,
           color: Colors.blueGrey,
           child: BottomAppBar(
-            shape: CircularNotchedRectangle(),
+            shape: const CircularNotchedRectangle(),
             child: Row(
               children: [
-                Spacer(),
+                const Spacer(),
                 Text(
                   "Total: " + bloc.getPrix().toString() + " €",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   height: 45,
                   width: 200,
-                  margin: EdgeInsets.only(top: 10),
+                  margin: const EdgeInsets.only(top: 10),
                   child: MaterialButton(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(45),
@@ -166,7 +171,7 @@ class _PannierState extends State<Pannier> {
                         );
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       "Buy now",
                       style: TextStyle(
                         color: Colors.white,
@@ -176,7 +181,7 @@ class _PannierState extends State<Pannier> {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ),
