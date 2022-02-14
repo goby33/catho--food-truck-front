@@ -1,3 +1,4 @@
+import 'package:catho_app_food_truck/pages/Login.dart';
 import 'package:catho_app_food_truck/pages/home/Home.dart';
 import 'package:catho_app_food_truck/pages/Pannier/Pannier.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
@@ -41,7 +42,7 @@ class _MyAppState extends State<MyApp> {
         floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: Colors.orange),
       ),
-      home: Home(),
+      home: Login(),
       routes: {
         BurgerPage.routeName: (context) => BurgerPage(),
         Pannier.routeName: (context) => Pannier(),
