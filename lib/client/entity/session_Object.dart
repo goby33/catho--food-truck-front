@@ -8,8 +8,7 @@ class SessionBloc {
   Stream get getStream => SessionStreamController.stream;
 
 
-  late final User user;
-  late final  bool connexion = false;
+  final List<User> allItems = [];
 
 
   void dispose() {
@@ -20,10 +19,10 @@ class SessionBloc {
     return !user;
   }*/
 void setusers(User user) {
-  this.user =  user;
+  this.allItems.add(user);
 }
 bool isConnected() {
-  return this.connexion;
+  return this.allItems.length != 0;
 }
 
 // Methode

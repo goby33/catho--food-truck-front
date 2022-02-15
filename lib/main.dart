@@ -1,3 +1,4 @@
+import 'package:catho_app_food_truck/client/entity/User.dart';
 import 'package:catho_app_food_truck/pages/Login.dart';
 import 'package:catho_app_food_truck/pages/Pannier/Pannier.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
@@ -62,10 +63,11 @@ class _MyAppState extends State<MyApp> {
   createContent() {
     return StreamBuilder(
       stream: session.getStream,
-      initialData: session,
+      initialData: session.allItems,
       builder: (context, snapshot) {
-        print(snapshot.hasData);
-        if (snapshot.data == true) {
+        List<User>? user =
+        snapshot.data as List<User>?;
+        if (user!.length != 0) {
           return Home();
         } else {
           return Login();
