@@ -46,12 +46,16 @@ class CartItemsBloc {
     return quantity;
   }
 
-  int getPrix() {
-    int prix = 0;
+  double getPrix() {
+    double prix = 0;
     for (PannierObject element in allItems) {
       prix += element.quantity * element.produit.prix;
     }
     return prix;
+  }
+
+  void viderPannier() {
+    allItems.clear();
   }
 }
 

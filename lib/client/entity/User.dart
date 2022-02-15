@@ -8,7 +8,7 @@ class User {
   final int id_user;
   final String prenom;
   final String url_image;
-  final double solde;
+  late  double solde;
   final String formation;
   final String pseudo;
   final String nom;

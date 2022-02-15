@@ -1,5 +1,6 @@
 import 'package:catho_app_food_truck/client/entity/Pannier_object.dart';
 import 'package:catho_app_food_truck/client/entity/cart_items_bloc.dart';
+import 'package:catho_app_food_truck/client/entity/session_Object.dart';
 import 'package:flutter/material.dart';
 
 class Pannier extends StatefulWidget {
@@ -165,10 +166,28 @@ class _PannierState extends State<Pannier> {
                     color: (bloc.getPrix() > 0) ? Colors.orange : Colors.grey,
                     onPressed: () {
                       if (bloc.getPrix() > 0) {
-                        Navigator.pushNamed(
-                          context,
-                          '/',
-                        );
+                        if (session.getSolde() - bloc.getPrix() >= 0) {
+                          session.setNewSolde(bloc.getPrix());
+                          bloc.viderPannier();
+                          Navigator.pushNamed(
+                            context,
+                            '/',
+                          );
+                        } else {
+                          showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Solde insufisant'),
+                              content: const Text('votre solde est insufisant, recharger votre carte'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        };
                       }
                     },
                     child: const Text(

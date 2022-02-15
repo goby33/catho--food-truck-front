@@ -1,3 +1,5 @@
+import 'package:catho_app_food_truck/client/entity/User.dart';
+import 'package:catho_app_food_truck/client/entity/session_Object.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatefulWidget {
@@ -22,6 +24,7 @@ class _HeaderState extends State<Header> {
 
   @override
   Widget build(BuildContext context) {
+    User user = session.allItems.first;
     Size size = MediaQuery.of(context).size;
     return SliverList(
         delegate: SliverChildListDelegate(
@@ -47,13 +50,11 @@ class _HeaderState extends State<Header> {
                       ),
                       Row(
                         children: [
-                          const CircleAvatar(
-                            backgroundColor: Colors.white70,
-                            radius: 35,
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage("images/pexels-pixabay-34534.png"),
-                              radius: 30,
+                          ClipRRect(
+                            child: Image.network(
+                              session.getUrl(),
+                              width: 100.0,
+                              height: 100.0,
                             ),
                           ),
                           const SizedBox(
@@ -61,8 +62,8 @@ class _HeaderState extends State<Header> {
                           ),
                           Column(
                             children: [
-                              const Text(
-                                "Paul Carton",
+                               Text(
+                                session.getName(),
                                 style: TextStyle(
                                     color: Colors.white70,
                                     fontSize: 18,
@@ -74,13 +75,13 @@ class _HeaderState extends State<Header> {
                                   borderRadius: BorderRadius.circular(20),
                                   color: Colors.black54,
                                 ),
-                                child: const Text("Master Cyber",
+                                child: Text(session.getFormation(),
                                     style: TextStyle(color: Colors.white70)),
                               ),
                             ],
                           ),
                           const Spacer(),
-                          const Text("14 €",
+                           Text(session.getSolde().toString() + " €",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

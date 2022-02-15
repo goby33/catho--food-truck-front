@@ -1,3 +1,4 @@
+import 'package:catho_app_food_truck/client/entity/session_Object.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -8,7 +9,7 @@ class MyDrawer extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: const <Widget>[
+        children:  <Widget>[
           DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.orange,
@@ -40,6 +41,10 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.logout),
             title: Text('Log Out'),
+            onTap: () {
+              session.deconnexion();
+              Navigator.pushNamed(context, '/login');
+            },
           ),
         ],
       ),
