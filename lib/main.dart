@@ -1,7 +1,12 @@
 import 'package:catho_app_food_truck/pages/Login.dart';
 import 'package:catho_app_food_truck/pages/Pannier/Pannier.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
+import 'package:catho_app_food_truck/pages/home/Home.dart';
 import 'package:flutter/material.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+import 'client/entity/session_Object.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +14,6 @@ void main() {
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   _MyAppState createState() {
     return _MyAppState();
@@ -17,6 +21,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final _channel = WebSocketChannel.connect(
+    Uri.parse('wss://echo.websocket.org'),
+  );
   @override
   void initState() {
     super.initState();
@@ -41,12 +48,31 @@ class _MyAppState extends State<MyApp> {
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: Colors.orange),
       ),
-      home: const Login(),
+      home: createContent(),
       routes: {
         BurgerPage.routeName: (context) => const BurgerPage(),
         Pannier.routeName: (context) => const Pannier(),
+        '/login': (context) => Login(),
+        '/dashboard': (context) => Home(),
       },
       debugShowCheckedModeBanner: false,
     );
   }
+
+  createContent() {
+    return StreamBuilder(
+      stream: session.getStream,
+      initialData: session,
+      builder: (context, snapshot) {
+        print(snapshot.hasData);
+        if (snapshot.data == true) {
+          return Home();
+        } else {
+          return Login();
+        }
+      },
+    );
+  }
 }
+
+

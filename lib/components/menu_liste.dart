@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:catho_app_food_truck/client/entity/session_Object.dart';
+import 'package:catho_app_food_truck/pages/Login.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/ArgumentsBurgerPage.dart';
 import 'package:catho_app_food_truck/pages/burgerPage/burger_page.dart';
+import 'package:catho_app_food_truck/pages/home/Home.dart';
 import 'package:flutter/material.dart';
 
 import '../client/entity/Produits.dart';
@@ -237,7 +240,13 @@ class _MenuListState extends State<MenuList> {
                   return Text('${snapshot.error}');
                 }
                 // By default, show a loading spinner.
-                return const CircularProgressIndicator();
+                return const SizedBox(
+                  child: CircularProgressIndicator(
+                    color: Colors.greenAccent,
+                  ),
+                  height: 100.0,
+                  width: 100.0,
+                );
               },
             ),
           ),
